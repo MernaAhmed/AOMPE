@@ -2,8 +2,10 @@ package com.vodafone.api.test;
 import org.junit.Test;
 
 import com.vodafone.api.core.*;
-import org.testng.Assert;
+import org.junit.Assert;
+import org.junit.Test;
 
+import com.vodafone.api.core.HttpRequest;
 public class TestResponse {
     @Test
     public void testHttpResponseConvertToJson() {
