@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 30, 2020 4:12:56 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.vodafone.schema.SMRTPRC.CdlTriggers" table="CDL_TRIGGERS">
+	    <composite-id class="CdlTriggersIDs">
+	      <key-property name="IDI" column="IDI" />
+	      <key-property name="IDV" column="IDV" />
+	      <key-property name="IDD" column="IDD" />
+	    </composite-id>
+	    <property name="MSISDN" type="java.lang.String">
+	        <column name="MSISDN" />
+	    </property>
+    </class>
+</hibernate-mapping>
