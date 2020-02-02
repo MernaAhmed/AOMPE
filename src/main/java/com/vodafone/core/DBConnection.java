@@ -55,4 +55,7 @@ public class DBConnection {
     public Statement getStatment() {
     	return this.statement;
     }
+    public void close() throws SQLException {
+    	this.connection.close();
+    }
 }

@@ -1,4 +1,4 @@
-package com.vodafone.api.test;
+package com.vodafone.api.test.core;
 import java.io.IOException;
 
 import org.junit.After;
@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.vodafone.api.core.ApiConnection;
+import com.vodafone.core.ApiConnection;
 
 public class TestApiConnection {
 	private String requestURL="http://10.230.85.119:7005/cdl-trg-intg/trgsubmit";

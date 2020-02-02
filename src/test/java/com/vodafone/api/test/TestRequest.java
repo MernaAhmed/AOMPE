@@ -3,7 +3,7 @@ package com.vodafone.api.test;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.vodafone.api.core.HttpRequest;
+import com.vodafone.api.HttpRequest;
 
 public class TestRequest {
 

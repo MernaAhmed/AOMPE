@@ -1,4 +1,4 @@
-package com.vodafone.api.test;
+package com.vodafone.api.test.core;
 import com.vodafone.core.DBConnection;
 
 import java.sql.Statement;

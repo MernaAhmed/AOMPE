@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.vodafone.api.core.HttpRequest;
-import com.vodafone.api.core.SheetHandle;
+import com.vodafone.api.HttpRequest;
+import com.vodafone.core.SheetHandle;
 
 public class Gift {
 

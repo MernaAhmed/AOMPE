@@ -1,5 +1,5 @@
-package com.vodafone.api.test;
-import com.vodafone.api.core.*;
+package com.vodafone.api.test.core;
+import com.vodafone.core.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
