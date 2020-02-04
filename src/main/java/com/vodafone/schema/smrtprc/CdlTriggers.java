@@ -3,6 +3,7 @@ package com.vodafone.schema.smrtprc;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -12,12 +13,13 @@ import com.vodafone.core.DBConnection;
 public class CdlTriggers {
 	
 	private int MSISDN;
-    private CdlTriggersIDs cdlTriggersIds;
+	private int TYPE_ID;
+	private String TIME;
 	public String tableName = "CDL_TRIGGERS";
-    private DBConnection dbConnection;
+    public DBConnection dbConnection;
     private Statement statement;
-    String SELECT_QUERY = "SELECT MSISDN,IDI,IDV,IDD,TYPE_ID,GP1,GP2,STATUS_ID from %s where MSISDN = %s and IDI=%s and IDD=%s and IDV = %s";
-    private HashMap<String,String> map=new HashMap<String,String>();  
+    String SELECT_QUERY = "SELECT MSISDN,IDI,IDV,IDD,TYPE_ID,GP1,GP2,STATUS_ID from %s where MSISDN = %d and TYPE_ID=%d and TIME > \'%s\'";
+    private HashMap<String,String> resultMap=new HashMap<String,String>();  
     
 	public int getMSISDN() {
 	    return MSISDN;
@@ -25,20 +27,24 @@ public class CdlTriggers {
 	public void setMSISDN(int MSISDN) {
 	    this.MSISDN = MSISDN;
 	}
-
-    public CdlTriggersIDs getId() {
-        return cdlTriggersIds;
-    }
-
-    public void setId(CdlTriggersIDs cdlTriggersIds) {
-        this.cdlTriggersIds = cdlTriggersIds;
-    }
-   
+	public int getTYPE_ID() {
+		return this.TYPE_ID;
+	}
+	public void setTYPE_ID(int typeID) {
+		this.TYPE_ID = typeID;
+	}
+	public String getSEEN_TIME() {
+		return this.TIME;
+	}
+	public void setSEEN_TIME(String time) {
+		this.TIME = time;
+	}
    // for application use, to create new persistent objects
-   public CdlTriggers(int MSISDN,CdlTriggersIDs cdlTriggersIds) throws FileNotFoundException, ClassNotFoundException, IOException, SQLException
+   public CdlTriggers(int MSISDN,int typeID,String time) throws FileNotFoundException, ClassNotFoundException, IOException, SQLException
    {
       this.MSISDN = MSISDN;
-      this.cdlTriggersIds =cdlTriggersIds;
+      this.TYPE_ID=typeID;
+      this.TIME = time;
       initiateConnection();
    }
 	private void initiateConnection() throws FileNotFoundException, IOException, ClassNotFoundException, SQLException {
@@ -46,21 +52,26 @@ public class CdlTriggers {
 	    statement = dbConnection.getStatment();
 	}
 	public void get() throws SQLException {
-		executeSelectQuery(this.MSISDN);
+		executeSelectQuery(String.format(this.SELECT_QUERY,this.tableName,this.MSISDN,this.TYPE_ID,this.TIME));
 	}
-	private void executeSelectQuery(int testMSISDN) throws SQLException {
-		ResultSet selectSet = statement.executeQuery(String.format(this.SELECT_QUERY,this.tableName,testMSISDN,this.cdlTriggersIds.getIDI(),this.cdlTriggersIds.getIDD(),this.cdlTriggersIds.getIDV()));
+	
+	private void executeSelectQuery(String query) throws SQLException {
+		ResultSet selectSet = statement.executeQuery(query);
 		selectSet.next();
-		map.put("MSISDN",selectSet.getString("MSISDN"));
-		map.put("IDI",selectSet.getString("IDI"));
-		map.put("IDV",selectSet.getString("IDV"));
-		map.put("IDD",selectSet.getString("IDD"));
-		map.put("GP1",selectSet.getString("GP1"));
-		map.put("GP2",selectSet.getString("GP2"));
-		map.put("STATUS_ID",selectSet.getString("STATUS_ID"));
+		try {
+		setQueryResultValuesToMap(selectSet);
+		}catch(SQLException sqlexcp) {
+			throw new SQLException("No Records found");
+		}
 	}
+	private void setQueryResultValuesToMap(ResultSet selectSet) throws SQLException {
+		for(int columnNumber=1;columnNumber<=selectSet.getMetaData().getColumnCount();columnNumber++) {
+			resultMap.put(selectSet.getMetaData().getColumnName(columnNumber).toString(),selectSet.getString(columnNumber));
+		}
+	}
+	
 	public String getValueOf(String column) {
-		return map.get(column);
+		return resultMap.get(column);
 	}
 	
 }

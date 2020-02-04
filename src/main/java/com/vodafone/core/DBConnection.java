@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 public class DBConnection {
@@ -58,4 +59,9 @@ public class DBConnection {
     public void close() throws SQLException {
     	this.connection.close();
     }
+
+	public static String getTimeMinutesAgo(int minutes) {
+		SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yy hh:mm:ss a");
+		return formatter.format(System.currentTimeMillis() - (minutes * 60 * 1000));
+	}
 }

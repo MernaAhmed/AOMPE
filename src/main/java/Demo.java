@@ -1,8 +1,11 @@
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+
 import org.json.JSONObject;
 import com.vodafone.api.HttpResponse;
 import com.vodafone.api.gift.Gift;
 import com.vodafone.core.ApiConnection;
+import com.vodafone.core.DBConnection;
 import com.vodafone.core.SheetHandle;
 import com.vodafone.schema.smrtprc.CdlTriggers;
 import com.vodafone.schema.smrtprc.CdlTriggersIDs;
@@ -26,12 +29,11 @@ public class Demo {
 //		System.out.println(responseObject.get("failed"));
 		
 		CdlTriggersIDs cdtIDS = new CdlTriggersIDs(4280, 200202 , 36);
-		CdlTriggers cdt = new CdlTriggers(1005331730, cdtIDS);
+		CdlTriggers cdt = new CdlTriggers(1020201144,1174,DBConnection.getTimeMinutesAgo(40));
 		cdt.get();
+		System.out.println(cdt.getValueOf("STATUS_ID"));
 		System.out.println(cdt.getValueOf("GP2"));
 		
 
 	}
-	
-
 }
